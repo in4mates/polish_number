@@ -26,34 +26,33 @@ Or install it yourself as:
     PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
     PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
 
-## Fractions format
+## Cents format
 
     PolishNumber.translate(34.11) #=> trzydzieści cztery i jedenaście setnych
     PolishNumber.translate(30.01, :currency => :PLN) #=> trzydzieści złote i jeden grosz
     PolishNumber.translate(0.10, :currency => :PLN) #=> dziesięć groszy
-    PolishNumber.translate(5.10, :currency => :PLN, :fractions => :none) #=> pięć złotych
-    PolishNumber.translate(5, :currency => :PLN, :fractions => :words) #=> pięć złotych zero groszy
-    PolishNumber.translate(5, :currency => :PLN, :fractions => :digits) #=> pięć złotych 00/100
+    PolishNumber.translate(5.10, :currency => :PLN, :cents => :no ) #=> pięć złotych
+    PolishNumber.translate(5, :currency => :PLN, :cents => :words ) #=> pięć złotych zero groszy
+    PolishNumber.translate(5, :currency => :PLN, :cents => :digits ) #=> pięć złotych 00/100
 
 ## Adding new currencies
 
     PolishNumber.add_currency(:COWS, { :one => 'krowa', :few => 'krowy',
-      :many => 'krów', :gender => :female,
+      :many => 'krów', :gender => :she,
       :one_100 => 'ser', :few_100 => 'sery',
-      :many_100 => 'serów', :gender_100 => :male})
+      :many_100 => 'serów', :gender_100 => :hi})
 
     PolishNumber.translate(35.05, :currency => :COWS) #=> trzydzieści pięć krów i pięć serów
 
-## Changelog
+## Ordinal numbers
 
- * 1.2.0 - Added billions support.
-           Fixed multiple bugs.
-           Added changelog to readme.
-           Added support for genders in currencies.
-           Added support for hundredth parts of number.(setne i grosze)
-           Remove "jeden" from million and thousand when only one.
-           Added support for adding new currencies.
- * 1.1.0 - First changeloged version
+The gem translate ordinal numbers in 0..99 range for all cases (nominative, genitive, dative, accusative, instrumental, locative, vocative) and all gender (masculine, feminine, neuter, masculine_personal, non_masculine)
+For masculine_personal gender and nominative/vocative case number should be in 0..4 range
+
+    PolishNumber.translate_ordinal(34, :grammatical_case => :nominative, :gender => :masculine) #=> trzydziesty czwarty
+    PolishNumber.translate_ordinal(18, :grammatical_case => :dative, :gender => :feminine) #=> osiemnastej
+    PolishNumber.translate_ordinal(20, :grammatical_case => :instrumental, :gender => :neuter) #=> dwudziestym
+    PolishNumber.translate_ordinal(2, :grammatical_case => :nominative, :gender => :masculine_personal) #=> drudzy
 
 ## Contributing
 
