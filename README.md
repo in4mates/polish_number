@@ -54,6 +54,12 @@ For masculine_personal gender and nominative/vocative case number should be in 0
     PolishNumber.translate_ordinal(20, :grammatical_case => :instrumental, :gender => :neuter) #=> dwudziestym
     PolishNumber.translate_ordinal(2, :grammatical_case => :nominative, :gender => :masculine_personal) #=> drudzy
 
+## Officially form
+
+    PolishNumber.translate(1000000001, :officially => true) #=> jeden miliard jeden
+    PolishNumber.translate(1001001001, :officially => true) #=> jeden miliard jeden milion jeden tysiąc jeden
+    PolishNumber.translate(2001000, :officially => true) #=> dwa miliony jeden tysiąc
+
 ## Contributing
 
 1. [Fork it](http://github.com/amberbit/polish_number/fork)

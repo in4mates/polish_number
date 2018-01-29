@@ -38,18 +38,18 @@ describe :PolishNumber do
       323 => { :number => 'trzysta dwadzieścia trzy', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       440 => { :number => 'czterysta czterdzieści', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       999 => { :number => 'dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1000 => { :number => 'jeden tysiąc', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1002 => { :number => 'jeden tysiąc dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1011 => { :number => 'jeden tysiąc jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1111 => { :number => 'jeden tysiąc sto jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1222 => { :number => 'jeden tysiąc dwieście dwadzieścia dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1000 => { :number => 'tysiąc', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1002 => { :number => 'tysiąc dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1011 => { :number => 'tysiąc jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1111 => { :number => 'tysiąc sto jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1222 => { :number => 'tysiąc dwieście dwadzieścia dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       2415 => { :number => 'dwa tysiące czterysta piętnaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       5000 => { :number => 'pięć tysięcy', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       10000 => { :number => 'dziesięć tysięcy', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       22141 => { :number => 'dwadzieścia dwa tysiące sto czterdzieści jeden', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       123754 => { :number => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       999999 => { :number => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-      1999999 => { :number => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+      1999999 => { :number => 'milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
       5123754 => { :number => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' }
   }.each do |number, translation|
     it "should translate #{number} to '#{translation[:number]}'" do
@@ -162,6 +162,21 @@ describe :PolishNumber do
                                        :one_100 => 'ser', :few_100 => 'sery', :many_100 => 'serów', :gender_100 => :hi})
     PolishNumber.translate(35.05, :currency => :COWS).should ==
         "trzydzieści pięć krów, pięć serów"
+  end
+
+  it "should translate 1_000_000_001 :with officially true to jeden miliard jeden" do
+    PolishNumber.translate(1_000_000_001, :officially => true).should ==
+        "jeden miliard jeden"
+  end
+
+  it "should translate 1_001_001_001 :with officially true to jeden miliard jeden milion jeden tysiąc jeden" do
+    PolishNumber.translate(1_001_001_001).should ==
+        "jeden miliard jeden milion jeden tysiąc jeden"
+  end
+
+  it "should translate 2_001_000 :with officially true to dwa miliony jeden tysiąc" do
+    PolishNumber.translate(2_001_000).should ==
+        "dwa miliony jeden tysiąc"
   end
 
   #ORDINAL NUMBERS

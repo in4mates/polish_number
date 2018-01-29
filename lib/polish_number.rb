@@ -166,7 +166,7 @@ module PolishNumber
     options = validate(number, options)
 
     options[:cents] ||= :auto
-    options[:colloquially] ||= false
+    options[:officially] ||= false
     number = number.to_i if options[:cents]==:no
     formatted_number = sprintf('%015.2f', number)
     currency = CURRENCIES[options[:currency] || :NO]
@@ -196,7 +196,7 @@ module PolishNumber
           result << ' i '
         end
       end
-      result << process_0_999(digits_cents, options[:colloquially], number_cents, currency[:gender_100] || :hi) if digits
+      result << process_0_999(digits_cents, options[:officially], number_cents, currency[:gender_100] || :hi) if digits
       result << ZERO.dup if formatted_sub_number == '00'
       result.strip!
       result << ' '
@@ -215,19 +215,19 @@ module PolishNumber
       result = ZERO.dup
     else
       result = ''
-      result << process_0_999(digits[0..2], options[:colloquially], number, :number)
+      result << process_0_999(digits[0..2], options[:officially], number, :number)
       result << billions(number.to_i/1000000000, digits[0..2])
       result.strip!
       result << ' '
-      result << process_0_999(digits[3..5], options[:colloquially], number, :number)
+      result << process_0_999(digits[3..5], options[:officially], number, :number)
       result << millions(number.to_i/1000000, digits[3..5])
       result.strip!
       result << ' '
-      result << process_0_999(digits[6..8], options[:colloquially], number, :number)
+      result << process_0_999(digits[6..8], options[:officially], number, :number)
       result << thousands(number.to_i/1000, digits[6..8])
       result.strip!
       result << ' '
-      result << process_0_999(digits[9..11], options[:colloquially], number, currency[:gender] || :hi)
+      result << process_0_999(digits[9..11], options[:officially], number, currency[:gender] || :hi)
       result.strip!
     end
 
@@ -237,7 +237,7 @@ module PolishNumber
     result
   end
 
-  def self.process_0_999(digits, colloquially, number, object)
+  def self.process_0_999(digits, officially, number, object)
     result = ''
     result << HUNDREDS[digits[0]]
 
@@ -245,20 +245,20 @@ module PolishNumber
       result << TEENS[digits[2]]
     else
       result << TENS[digits[1]]
-      result << process_0_9(digits, colloquially, number, object)
+      result << process_0_9(digits, officially, number, object)
     end
 
     result
   end
 
-  def self.process_0_9(digits, colloquially, number, object)
+  def self.process_0_9(digits, officially, number, object)
     if digits[2] == 2 && object == :she
       'dwie '
     elsif number == 1 && object == :she
       'jedna '
     elsif number == 1 && object == :it
       'jedno '
-    elsif digits == [0,0,1] && object == :number && colloquially
+    elsif digits == [0,0,1] && object == :number && !officially
       ''
     else
       UNITIES[digits[2]]
