@@ -2,6 +2,20 @@
 
 Translates numbers to Polish words.
 
+## Build and publishing
+
+To build the gem:
+
+    gem build polish_number.gemspec
+
+To publish into Nexus repository:
+
+```sh
+gem install nexus # if not already installed
+gem nexus polish_number-<version>.gem # replace <version> with actual version 
+```
+The Nexus gem will ask for Nexus URL and credentials for the first time. For in4mates the URL is: https://nexus.in4mates.com/repository/in4mates-gems/
+
 ## Installation
 
 Add this line to your application's Gemfile:
